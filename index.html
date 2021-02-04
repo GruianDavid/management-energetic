@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="scripts.js"></script>
 </head>
@@ -99,50 +100,83 @@
             </div>
 
             <div class="form-group highlight user-selected-value">
-                <label for="valueToBeRead">Value To Be Read</label>
+                <label for="valueToBeRead">Tensiune</label>
                 <input type="number" step="0.05" name="valueToBeRead" id="valueToBeRead" placeholder="valueToBeRead" min="0.1" max="0.9" value="0.1">
                 <span class="unit">unit</span>
             </div>
 
-
             <input type="submit" id="submit" value="Genereaza" >
-            
-
-
+ 
         </form>
     </div>
     <div class="form-output">
-        <div class="form-output-processed">
+        <div class="form-output-processed card">
             <div class="table">
-                <ul class="table-head">
-                    <li class="cell">Cell content</li>
-                    <li class="cell">Cell content</li>
-                    <li class="cell">Cell content</li>
-                    <li class="cell">Cell content</li>
-                </ul>
-                <ul class="table-body">
-                    <li class="cell">Cell content</li>
-                    <li class="cell">Cell content</li>
-                    <li class="cell">Cell content</li>
-                    <li class="cell">Cell content</li>
-                </ul>
+                <div class="table-title">Some name here</div>
+                <div class="table-head">
+                    <ul class="table-row">
+                        <li class="cell">Tensiune</li>
+                        <li class="cell">Curent</li>
+                        <li class="cell">Putere</li>
+                        <li class="cell">Rezistenta</li>
+                    </ul>
+                </div>
+                <div class="table-body">
+                    <ul class="table-row">
+                        <li class="cell" contenteditable>0.990941924</li>
+                        <li class="cell" contenteditable>0.990941924</li>
+                        <li class="cell" contenteditable>0.990941924</li>
+                        <li class="cell" contenteditable>0.990941924</li>
+                    </ul>
+                    <ul class="table-row highlight">
+                        <li class="cell" contenteditable>0.990941924</li>
+                        <li class="cell" contenteditable>0.990941924</li>
+                        <li class="cell" contenteditable>0.990941924</li>
+                        <li class="cell" contenteditable>0.990941924</li>
+                    </ul>
+                </div>
             </div>
         </div>
-        <div class="form-output-chart"></div>
-        <div class="form-output-functions">
+        <div class="form-output-chart card">
             <div class="table">
-                <ul class="table-head">
-                    <li class="cell">Cell content</li>
-                    <li class="cell">Cell content</li>
-                    <li class="cell">Cell content</li>
-                    <li class="cell">Cell content</li>
-                </ul>
-                <ul class="table-body">
-                    <li class="cell">Cell content</li>
-                    <li class="cell">Cell content</li>
-                    <li class="cell">Cell content</li>
-                    <li class="cell">Cell content</li>
-                </ul>
+                <div class="table-title">Some name here</div>
+                <div class="table-body">
+                    <div class="chart"></div>
+                </div>
+            </div>
+        </div>
+        <div class="form-output-functions card">
+            <div class="table">
+                <div class="table-title">Some name here</div>
+                <div class="table-head">
+                    <ul class="table-row" data-crt="x">
+                        <li class="cell">Cell content</li>
+                        <li class="cell">Cell content</li>
+                        <li class="cell">Cell content</li>
+                    </ul>
+                </div>
+                <div class="table-body">
+                    <ul class="table-row">
+                        <li class="cell">Cell content</li>
+                        <li class="cell">Cell content</li>
+                        <li class="cell">Cell content</li>
+                    </ul>
+                    <ul class="table-row">
+                        <li class="cell">Cell content</li>
+                        <li class="cell">Cell content</li>
+                        <li class="cell">Cell content</li>
+                    </ul>
+                    <ul class="table-row">
+                        <li class="cell">Cell content</li>
+                        <li class="cell">Cell content</li>
+                        <li class="cell">Cell content</li>
+                    </ul>
+                    <ul class="table-row">
+                        <li class="cell">Cell content</li>
+                        <li class="cell">Cell content</li>
+                        <li class="cell">Cell content</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
