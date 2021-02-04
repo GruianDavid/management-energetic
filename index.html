@@ -6,10 +6,167 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Management Energetic</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="scripts.js"></script>
 </head>
 <body>
+
+<div id="app">
+
+    <div class="form">
+        <form action="" id="">
+
+            <legend>Management Energetic</legend>
+            <div class="form-head">
+                <span class="label">Param</span>
+                <span class="input">Valoare</span>
+                <span class="unit">U.M.</span>
+            </div>
+            <div class="form-group">
+                <label for="isc">isc</label>
+                <input type="text" name="isc" id="isc" placeholder="isc" value="6">
+                <span class="unit">unit</span>
+            </div>
+
+            <div class="form-group">
+                <label for="ki">ki</label>
+                <input type="text" name="ki" id="ki" placeholder="ki" value="0.001">
+                <span class="unit">unit</span>
+            </div>
+
+            <div class="form-group">
+                <label for="t">t</label>
+                <input type="text" name="t" id="t" placeholder="t" value="300">
+                <span class="unit">unit</span>
+            </div>
+
+            <div class="form-group">
+                <label for="lr">lr</label>
+                <input type="text" name="lr" id="lr" placeholder="lr" value="1000">
+                <span class="unit">unit</span>
+            </div>
+
+            <div class="form-group">
+                <label for="lm">lm</label>
+                <input type="text" name="lm" id="lm" placeholder="lm" value="1000">
+                <span class="unit">unit</span>
+            </div>
+
+            <div class="form-group">
+                <label for="q">q</label>
+                <input type="text" name="q" id="q" placeholder="q" value="1.602E-19">
+                <span class="unit">unit</span>
+            </div>
+
+            <div class="form-group">
+                <label for="n">n</label>
+                <input type="text" name="n" id="n" placeholder="n" value="1">
+                <span class="unit">unit</span>
+            </div>
+
+            <div class="form-group">
+                <label for="k">k</label>
+                <input type="text" name="k" id="k" placeholder="k" value="1.38E-23">
+                <span class="unit">unit</span>
+            </div>
+
+            <div class="form-group">
+                <label for="Rs">Rs</label>
+                <input type="text" name="Rs" id="Rs" placeholder="Rs" value="0.5">
+                <span class="unit">unit</span>
+            </div>
+
+            <div class="form-group">
+                <label for="Rsh">Rsh</label>
+                <input type="text" name="Rsh" id="Rsh" placeholder="Rsh" value="1000">
+                <span class="unit">unit</span>
+            </div>
+
+            <div class="form-group readonly">
+                <label for="l0">l0</label>
+                <input type="text" name="l0" id="l0" placeholder="l0" value="isc/(Math.exp(q*0.6/n/k/t)-1)">
+                <span class="unit">unit</span>
+            </div>
+
+            <div class="user-selected-processing checkbox-switch">
+                <input type="checkbox" name="autoManual" id="autoManual">
+                <label class="automatic">Generare Automata</label>
+                <label for="autoManual" class="switch"></label>
+                <label class="manual">Generare Manuala</label>
+            </div>
+
+            <div class="form-group highlight user-selected-value">
+                <label for="valueToBeRead">Value To Be Read</label>
+                <input type="number" step="0.05" name="valueToBeRead" id="valueToBeRead" placeholder="valueToBeRead" min="0.1" max="0.9" value="0.1">
+                <span class="unit">unit</span>
+            </div>
+
+
+            <input type="submit" id="submit" value="Genereaza" >
+            
+
+
+        </form>
+    </div>
+    <div class="form-output">
+        <div class="form-output-processed">
+            <div class="table">
+                <ul class="table-head">
+                    <li class="cell">Cell content</li>
+                    <li class="cell">Cell content</li>
+                    <li class="cell">Cell content</li>
+                    <li class="cell">Cell content</li>
+                </ul>
+                <ul class="table-body">
+                    <li class="cell">Cell content</li>
+                    <li class="cell">Cell content</li>
+                    <li class="cell">Cell content</li>
+                    <li class="cell">Cell content</li>
+                </ul>
+            </div>
+        </div>
+        <div class="form-output-chart"></div>
+        <div class="form-output-functions">
+            <div class="table">
+                <ul class="table-head">
+                    <li class="cell">Cell content</li>
+                    <li class="cell">Cell content</li>
+                    <li class="cell">Cell content</li>
+                    <li class="cell">Cell content</li>
+                </ul>
+                <ul class="table-body">
+                    <li class="cell">Cell content</li>
+                    <li class="cell">Cell content</li>
+                    <li class="cell">Cell content</li>
+                    <li class="cell">Cell content</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function toggle() {
+        if ($(".checkbox-switch input").is(":checked")) {
+            $(".user-selected-value").removeClass("active");
+        } else {
+            $(".user-selected-value").addClass("active");
+        }
+    }
+
+    $(document).on('load', function(){
+        toggle();
+    })
+
+    $(".switch").on("click", function(){
+        toggle();
+    });
+    
+</script>
 
 </body>
 </html>

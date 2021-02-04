@@ -1,0 +1,213 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Source Serif Pro", serif;
+}
+
+:root {
+  --padding: 30px;
+}
+
+body {
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+  background: #e4e4e4;
+}
+
+#app {
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-start;
+  position: fixed;
+  height: 100vh;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
+#app .form::-webkit-scrollbar {
+  display: none;
+}
+#app .form {
+  width: 450px;
+  height: 100%;
+  overflow: auto;
+  background: #212121;
+  padding: var(--padding);
+  flex-shrink: 0;
+  flex-grow: 0;
+}
+#app .form legend {
+  font-size: 28px;
+  color: #04a3e2;
+  font-weight: 600;
+  text-transform: uppercase;
+  width: 100%;
+  text-align: center;
+  margin-bottom: var(--padding);
+}
+#app .form-output {
+  height: 100%;
+  flex-grow: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas: "table-processed table-functions" "chart table-functions";
+  grid-gap: var(--padding);
+  padding: var(--padding);
+}
+#app .form-output-processed {
+  grid-area: table-processed;
+}
+#app .form-output-chart {
+  grid-area: chart;
+}
+#app .form-output-functions {
+  grid-area: table-functions;
+}
+
+.form .form-group, .form .form-head {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  margin-bottom: 5px;
+}
+.form input:not([type=checkbox]) {
+  border-radius: 4px;
+  height: 30px;
+  border: 0;
+  outline: 0;
+  box-shadow: 0px 0px 0px 1px #ccc;
+  transition: all 0.25s ease-in-out;
+  font-weight: 800;
+  font-size: 16px;
+}
+.form input:not([type=checkbox]):focus {
+  border: none;
+  border: 0;
+  outline: 0;
+  box-shadow: 0px 0px 0px 5px #59ca62;
+}
+.form label, .form .label, .form .unit {
+  width: 25%;
+  text-align: right;
+  font-weight: 600;
+  color: #fefefe;
+  font-size: 16px;
+  padding: 10px 20px;
+}
+.form input, .form .input {
+  width: 55%;
+  text-align: center;
+}
+.form .unit {
+  width: 20%;
+  text-align: left;
+  font-style: italic;
+}
+.form .form-head span {
+  font-style: normal;
+  font-size: 18px;
+  font-weight: 600;
+  color: #59ca62;
+}
+.form #submit {
+  width: 100%;
+  padding: 15px;
+  height: auto;
+  color: #ffffff;
+  background: #59ca62;
+  border: 0;
+  outline: 0;
+  font-size: 20px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  box-shadow: none;
+  transform: scale(1);
+  transition: all 0.25s ease-in-out;
+}
+.form #submit:active {
+  transform: scale(0.94);
+}
+.form .user-selected-value {
+  height: 100px;
+  transition: all 0.25s ease-in-out;
+  overflow: hidden;
+}
+.form .user-selected-value:not(.active) {
+  height: 0;
+}
+
+.checkbox-switch {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  padding: 20px 0;
+}
+.checkbox-switch label {
+  width: auto;
+  padding: 10px 0;
+  transition: all 0.25s ease-in-out;
+}
+.checkbox-switch label.manual {
+  text-align: right;
+  pointer-events: none;
+}
+.checkbox-switch label .automatic {
+  text-align: left;
+  pointer-events: none;
+}
+.checkbox-switch .switch {
+  width: 50px;
+  height: 8px;
+  border-radius: 50px;
+  background: #3b3b3b;
+  position: relative;
+  margin: 0 20px;
+  cursor: pointer;
+}
+.checkbox-switch .switch:after {
+  content: "";
+  display: block;
+  width: 30px;
+  height: 30px;
+  border-radius: 30px;
+  background: #555555;
+  box-shadow: inset 0px 0px 0px 5px #fefefe;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  margin-top: -15px;
+  transition: all 0.15s linear;
+}
+.checkbox-switch .automatic {
+  color: #59ca62;
+}
+.checkbox-switch .manual {
+  color: #fefefe;
+}
+.checkbox-switch input {
+  position: absolute;
+  width: 1px;
+  height: 10px;
+  opacity: 0;
+}
+.checkbox-switch input:checked + label + .switch {
+  background: #59ca62;
+}
+.checkbox-switch input:checked + label + .switch:after {
+  left: 20px;
+  background: #59ca62;
+}
+.checkbox-switch input:checked + .automatic {
+  color: #fefefe;
+}
+.checkbox-switch input:checked + label + label + .manual {
+  color: #59ca62;
+}
+
+/*# sourceMappingURL=styles.css.map */
