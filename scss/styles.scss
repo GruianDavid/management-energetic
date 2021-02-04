@@ -1,0 +1,268 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Source Serif Pro', serif;
+}
+
+:root {
+    --padding: 30px;
+}
+
+
+body {
+    min-height: 100vh;
+    width: 100%;
+    position: relative;
+    background: #e4e4e4;
+}
+
+
+// Setup the grid
+#app {
+    display: flex;
+    align-items: stretch;
+    justify-content: flex-start;
+    position: fixed;
+    height: 100vh;
+    width: 100%;
+    top:0;
+    left:0;
+
+    .form::-webkit-scrollbar {
+        display: none;
+    }
+
+    .form {
+        width: 450px;
+        height: 100%;
+        overflow: auto;
+        background: #212121;
+        padding: var(--padding);
+        flex-shrink: 0;
+        flex-grow: 0;
+
+        legend {
+            font-size: 28px;
+            color: #04a3e2;
+            font-weight: 600;
+            text-transform: uppercase;
+            width: 100%;
+            text-align: center;
+            margin-bottom: var(--padding);
+        }
+    }
+
+    .form-output {
+        height: 100%;
+        flex-grow: 1;
+
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+
+        grid-template-areas: "table-processed table-functions" 
+                             "chart table-functions";
+        grid-gap: var(--padding);
+        padding: var(--padding);
+
+
+        &-processed {
+            grid-area: table-processed;
+        }
+        &-chart {
+            grid-area: chart;
+        }
+        &-functions {
+            grid-area: table-functions;
+        }
+        
+
+    }
+}
+
+
+// style individual components 
+
+.form {
+
+    .form-group, .form-head {
+        
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        width: 100%;
+        margin-bottom: 5px;
+
+    }
+
+    input:not([type="checkbox"]) {
+        border-radius: 4px;
+        height: 30px;
+        border: 0;
+        outline: 0;
+        box-shadow: 0px 0px 0px 1px #ccc;
+        transition: all 0.25s ease-in-out;
+        font-weight: 800;
+        font-size: 16px;
+
+        &:focus {
+            border: none;
+            border: 0;
+            outline: 0;
+            box-shadow: 0px 0px 0px 5px #59ca62;
+        }
+    }
+    
+    label, .label, .unit {
+        width: 25%;
+        text-align: right;
+        font-weight: 600;
+        color: #fefefe;
+        font-size: 16px;
+        padding: 10px 20px;
+    }
+
+    input, .input {
+        width: 55%;
+        text-align: center;
+    }
+
+    .unit {
+        width: 20%;
+        text-align: left;
+        font-style: italic;
+    }
+
+    .form-head {
+
+        span {
+            font-style: normal;
+            font-size: 18px;
+            font-weight: 600;
+            color: #59ca62;
+        }
+    }
+
+
+    #submit {
+        width: 100%;
+        padding: 15px;
+        height: auto;
+        color: #ffffff;
+        background:  #59ca62;
+        border: 0;
+        outline: 0;
+        font-size: 20px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        box-shadow: none;
+        transform: scale(1);
+        transition: all 0.25s ease-in-out;
+
+        &:active {
+            transform: scale(0.94);
+        }
+    }
+
+    .user-selected-value {
+
+        height: 100px;
+        transition: all 0.25s ease-in-out;
+        overflow: hidden;
+
+
+        &:not(.active) {
+            height: 0;
+        }
+    }
+
+}
+
+// style the checkbox: switch
+.checkbox-switch {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    padding: 20px 0;
+
+    label {
+        width: auto;
+        padding: 10px 0;
+        transition: all 0.25s ease-in-out;
+
+        &.manual {
+            text-align: right;           
+            pointer-events: none;
+        }
+
+        .automatic {
+            text-align: left;        
+            pointer-events: none;
+        }
+    }
+    
+    .switch {
+        width: 50px;
+        height: 8px;
+        border-radius: 50px;
+        background: #3b3b3b;
+        position: relative;
+        margin: 0 20px;
+        cursor: pointer;
+
+        &:after {
+            content: "";
+            display: block;
+            width: 30px;
+            height: 30px;
+            border-radius: 30px;
+            background: #555555;
+            box-shadow: inset 0px 0px 0px 5px #fefefe;
+            position: absolute;
+            top: 50%;
+            left: 0;
+            margin-top: -15px;
+            transition: all 0.15s linear;
+        }
+
+    }
+
+    .automatic {
+        color:  #59ca62;
+    }
+
+    .manual {
+        color: #fefefe;
+    }
+
+    input {
+        position: absolute;
+        width: 1px;
+        height: 10px;
+        opacity: 0;
+    }
+
+    input:checked {
+
+        + label + .switch {
+            background:#59ca62 ;
+            &:after {
+                left: 20px; 
+                background: #59ca62;  
+            }
+        }
+
+        + .automatic {
+            color: #fefefe;
+        }
+        
+        + label + label + .manual {
+            color:  #59ca62;
+        }
+    }
+}
+
+
