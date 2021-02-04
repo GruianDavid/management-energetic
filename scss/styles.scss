@@ -8,6 +8,11 @@
 
 :root {
     --padding: 30px;
+    
+    
+    @media screen and (max-width: 1440px) {
+        --padding: 20px;
+    }
 }
 
 
@@ -35,7 +40,7 @@ body {
     }
 
     .form {
-        width: 450px;
+        width: 350px;
         height: 100%;
         overflow: auto;
         background: #212121;
@@ -66,6 +71,15 @@ body {
                              "chart table-functions";
         grid-gap: var(--padding);
         padding: var(--padding);
+
+        @media screen and (max-width: 1300px) {
+            grid-template-columns: 1fr;
+            grid-template-rows: auto;
+    
+            grid-template-areas: "table-processed " 
+                                 "chart"
+                                 "table-functions";
+        }
 
 
         &-processed {
@@ -122,6 +136,9 @@ body {
         font-size: 16px;
         padding: 10px 20px;
     }
+    label, .label {
+        padding-left: 0;
+    }
 
     input, .input {
         width: 55%;
@@ -132,6 +149,7 @@ body {
         width: 20%;
         text-align: left;
         font-style: italic;
+        padding-right: 0;
     }
 
     .form-head {
@@ -194,12 +212,12 @@ body {
         transition: all 0.25s ease-in-out;
 
         &.manual {
-            text-align: right;           
+            text-align: left;           
             pointer-events: none;
         }
 
         .automatic {
-            text-align: left;        
+            text-align: right;        
             pointer-events: none;
         }
     }
@@ -269,6 +287,10 @@ body {
 
 .form-output {
 
+    @media screen and (max-width: 1300px) {
+        overflow: auto;
+    }
+
     .card {
         background: #fefefe;
         border-radius: 4px;
@@ -276,6 +298,10 @@ body {
         position: relative;
         overflow: hidden;
         padding: var(--padding);
+
+        @media screen and (max-width: 1300px) {
+            min-height: 400px;
+        }
     }
 
     .table {
