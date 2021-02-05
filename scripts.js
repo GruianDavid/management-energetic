@@ -11,34 +11,139 @@ $(document).ready(function (){
     let Rs = 0.5
     let Rsh = 1000
 
-    let valueToBeRead = 0.4
-    let backupFunctionsTable ='';
+    let inputVoltage = 0.1
 
+    let isManual = false;
+    $("input[type='checkbox']").on('change',function (){
+        if ($(this).is(":checked"))
+        {
+            isManual = true
+        }else{
+            isManual = false
+        }
+    })
+
+    $('#form-params').on('submit',function (e){
+        e.preventDefault()
+        let form = $(this).serializeArray()
+        console.log(form)
+        $.each(form,function (item,value){
+            switch (value['name']) {
+                case 'isc': isc = parseFloat(value['value'])
+                    break
+                case 'ki': ki = parseFloat(value['value'])
+                    break
+                case 't': t = parseFloat(value['value'])
+                    break
+                case 'Ir': Ir = parseFloat(value['value'])
+                    break
+                case 'Im': Im = parseFloat(value['value'])
+                    break
+                case 'q': q = parseFloat(value['value'])
+                    break
+                case 'n': n = parseFloat(value['value'])
+                    break
+                case 'k': k = parseFloat(value['value'])
+                    break
+                case 'Rs': Rs = parseFloat(value['value'])
+                    break
+                case 'Rsh': Rsh = parseFloat(value['value'])
+                    break
+                case 'voltage': inputVoltage = parseFloat(value['value'])
+                    break
+                default:
+            }
+        })
+        I0 = isc/(Math.exp(q*0.6/n/k/t)-1)
+        if (isManual){
+            addNewValue()
+        }else{
+            setValuesAutomatically()
+        }
+    })
+
+    function addNewValue(){
+        $('.highlight').removeClass('highlight')
+        resetFunctionsTable()
+        $('#voltage-function').text(inputVoltage)
+        let current = getWantedValueFor(inputVoltage)
+        addNewCurrent(current)
+        addNewPower(current)
+        setValueInProcessedTable(inputVoltage,current)
+        generateGraph()
+    }
+
+    function addNewCurrent(current){
+        currents.push({x:inputVoltage,y:current})
+        currents.sort((a, b) => (a.x > b.x) ? 1 : -1)
+    }
+
+    function addNewPower(current){
+        powers.push({x:inputVoltage,y:current*(inputVoltage)})
+        powers.sort((a, b) => (a.x > b.x) ? 1 : -1)
+
+    }
+
+    //initial load of values
+    let backupFunctionsTable ='';
     let currents = [];
     let powers = [];
-    for (let voltage = 2; voltage<20; voltage++){
-        resetFunctionsTable()
-        let current = getWantedValueFor(voltage/20)
-        if (current < 0){
-            //if current is negative load the last functions table
-            $('.form-output-functions .table-body').empty().append(backupFunctionsTable)
-            generateGraph()
-            break
-        }else{
-            currents.push({x:voltage/20,y:current})
-            powers.push({x:voltage/20,y:current*(voltage/20)})
-            setValuesInProcessedTable(voltage,current)
+    setValuesAutomatically()
+
+    function setValuesAutomatically(){
+        $('.highlight').removeClass('highlight')
+        for (let voltage = 2; voltage<20; voltage++){
+            resetFunctionsTable()
+            let current = getWantedValueFor(voltage/20)
+            if (current < 0){
+                //if current is negative load the last functions table
+                $('.form-output-functions .table-body').empty().append(backupFunctionsTable)
+                $('#voltage-function').text((voltage-1)/20)
+                generateGraph()
+                break
+            }else{
+                currents.push({x:voltage/20,y:current})
+                powers.push({x:voltage/20,y:current*(voltage/20)})
+                setValuesInProcessedTable(voltage,current)
+            }
         }
     }
 
     function setValuesInProcessedTable(voltage,current){
         $('.form-output-processed .table-body').append('' +
-            '<ul class="table-row">' +
+            '<ul class="table-row" data-voltage="'+(voltage/20)+'">' +
             '<li class="cell" contenteditable>'+(voltage/20).toFixed(2)+'</li>' +
             '<li class="cell" contenteditable>'+(current).toFixed(8)+'</li>' +
             '<li class="cell" contenteditable>'+(current*(voltage/20)).toFixed(8)+'</li>' +
             '<li class="cell" contenteditable>'+((voltage/20)/current).toFixed(8)+'</li>' +
             '</ul>')
+    }
+
+    function setValueInProcessedTable(voltage,current){
+        let element = '';
+        $('.form-output-processed .table-body').children('ul').each(function (){
+            if ($(this).data('voltage') < inputVoltage){
+                element = $(this);
+                return 0
+            }
+        })
+        if (element === '') {
+            $('.form-output-processed .table-body').append('' +
+                '<ul class="table-row highlight" data-voltage="' + (voltage) + '">' +
+                '<li class="cell" contenteditable>' + (voltage).toFixed(2) + '</li>' +
+                '<li class="cell" contenteditable>' + (current).toFixed(8) + '</li>' +
+                '<li class="cell" contenteditable>' + (current * (voltage)).toFixed(8) + '</li>' +
+                '<li class="cell" contenteditable>' + ((voltage) / current).toFixed(8) + '</li>' +
+                '</ul>')
+        }else{
+            element.after('' +
+                '<ul class="table-row highlight" data-voltage="' + (voltage) + '">' +
+                '<li class="cell" contenteditable>' + (voltage).toFixed(2) + '</li>' +
+                '<li class="cell" contenteditable>' + (current).toFixed(8) + '</li>' +
+                '<li class="cell" contenteditable>' + (current * (voltage)).toFixed(8) + '</li>' +
+                '<li class="cell" contenteditable>' + ((voltage) / current).toFixed(8) + '</li>' +
+                '</ul>')
+        }
     }
 
     function setValuesInFunctionsTable(fx,f1x,xn1){
@@ -71,7 +176,6 @@ $(document).ready(function (){
             if (xn1.toFixed(14) === lastValue.toFixed(14)){
                 consecutiveSameResults++
                 if (consecutiveSameResults === 10){
-                    console.log(index+" : "+lastValue)
                     return lastValue
                 }
             }else{
