@@ -7,10 +7,10 @@ $(document).ready(function (){
     let q = 1.602E-19
     let n = 1
     let k = 1.38E-23
-    let I0 = isc/(Math.exp(q*0.6/n/k/t)-1)
     let Rs = 0.5
     let Rsh = 1000
-
+    let I0 = isc/(Math.exp(q*0.6/n/k/t)-1)
+    $('#I0').val(I0.toPrecision(4))
     let inputVoltage = 0.1
 
     let isManual = false;
@@ -81,7 +81,6 @@ $(document).ready(function (){
     function addNewPower(current){
         powers.push({x:inputVoltage,y:current*(inputVoltage)})
         powers.sort((a, b) => (a.x > b.x) ? 1 : -1)
-
     }
 
     //initial load of values
@@ -91,7 +90,10 @@ $(document).ready(function (){
     setValuesAutomatically()
 
     function setValuesAutomatically(){
+        currents = [];
+        powers = [];
         $('.highlight').removeClass('highlight')
+        resetProcessedTable()
         for (let voltage = 2; voltage<20; voltage++){
             resetFunctionsTable()
             let current = getWantedValueFor(voltage/20)
@@ -112,17 +114,17 @@ $(document).ready(function (){
     function setValuesInProcessedTable(voltage,current){
         $('.form-output-processed .table-body').append('' +
             '<ul class="table-row" data-voltage="'+(voltage/20)+'">' +
-            '<li class="cell" contenteditable>'+(voltage/20).toFixed(2)+'</li>' +
-            '<li class="cell" contenteditable>'+(current).toFixed(8)+'</li>' +
-            '<li class="cell" contenteditable>'+(current*(voltage/20)).toFixed(8)+'</li>' +
-            '<li class="cell" contenteditable>'+((voltage/20)/current).toFixed(8)+'</li>' +
+            '<li class="cell" contenteditable>'+(voltage/20).toPrecision(2)+'</li>' +
+            '<li class="cell" contenteditable>'+(current).toPrecision(8)+'</li>' +
+            '<li class="cell" contenteditable>'+(current*(voltage/20)).toPrecision(8)+'</li>' +
+            '<li class="cell" contenteditable>'+((voltage/20)/current).toPrecision(8)+'</li>' +
             '</ul>')
     }
 
     function setValueInProcessedTable(voltage,current){
         let element = '';
         $('.form-output-processed .table-body').children('ul').each(function (){
-            if ($(this).data('voltage') < inputVoltage){
+            if ($(this).data('voltage') < voltage){
                 element = $(this);
                 return 0
             }
@@ -130,18 +132,18 @@ $(document).ready(function (){
         if (element === '') {
             $('.form-output-processed .table-body').append('' +
                 '<ul class="table-row highlight" data-voltage="' + (voltage) + '">' +
-                '<li class="cell" contenteditable>' + (voltage).toFixed(2) + '</li>' +
-                '<li class="cell" contenteditable>' + (current).toFixed(8) + '</li>' +
-                '<li class="cell" contenteditable>' + (current * (voltage)).toFixed(8) + '</li>' +
-                '<li class="cell" contenteditable>' + ((voltage) / current).toFixed(8) + '</li>' +
+                '<li class="cell" contenteditable>' + (voltage).toPrecision(2) + '</li>' +
+                '<li class="cell" contenteditable>' + (current).toPrecision(8) + '</li>' +
+                '<li class="cell" contenteditable>' + (current * (voltage)).toPrecision(8) + '</li>' +
+                '<li class="cell" contenteditable>' + ((voltage) / current).toPrecision(8) + '</li>' +
                 '</ul>')
         }else{
             element.after('' +
                 '<ul class="table-row highlight" data-voltage="' + (voltage) + '">' +
-                '<li class="cell" contenteditable>' + (voltage).toFixed(2) + '</li>' +
-                '<li class="cell" contenteditable>' + (current).toFixed(8) + '</li>' +
-                '<li class="cell" contenteditable>' + (current * (voltage)).toFixed(8) + '</li>' +
-                '<li class="cell" contenteditable>' + ((voltage) / current).toFixed(8) + '</li>' +
+                '<li class="cell" contenteditable>' + (voltage).toPrecision(2) + '</li>' +
+                '<li class="cell" contenteditable>' + (current).toPrecision(8) + '</li>' +
+                '<li class="cell" contenteditable>' + (current * (voltage)).toPrecision(8) + '</li>' +
+                '<li class="cell" contenteditable>' + ((voltage) / current).toPrecision(8) + '</li>' +
                 '</ul>')
         }
     }
@@ -149,9 +151,9 @@ $(document).ready(function (){
     function setValuesInFunctionsTable(fx,f1x,xn1){
         $('.form-output-functions .table-body').append('' +
             '<ul class="table-row">' +
-            '<li class="cell">'+(fx).toFixed(8)+'</li>' +
-            '<li class="cell">'+(f1x).toFixed(8)+'</li>' +
-            '<li class="cell">'+(xn1).toFixed(8)+'</li>' +
+            '<li class="cell">'+(fx).toPrecision(8)+'</li>' +
+            '<li class="cell">'+(f1x).toPrecision(8)+'</li>' +
+            '<li class="cell">'+(xn1).toPrecision(8)+'</li>' +
             '</ul>')
     }
 
@@ -159,6 +161,10 @@ $(document).ready(function (){
         let table = $('.form-output-functions .table-body')
         backupFunctionsTable = table.clone()
         table.empty()
+    }
+
+    function resetProcessedTable(){
+        $('.form-output-processed .table-body').empty()
     }
 
     function getWantedValueFor(valueToBeRead){
