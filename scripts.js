@@ -14,14 +14,19 @@ $(document).ready(function (){
     let valueToBeRead = 0.4
     let backupFunctionsTable ='';
 
+    let currents = [];
+    let powers = [];
     for (let voltage = 2; voltage<20; voltage++){
         resetFunctionsTable()
         let current = getWantedValueFor(voltage/20)
         if (current < 0){
             //if current is negative load the last functions table
             $('.form-output-functions .table-body').empty().append(backupFunctionsTable)
+            generateGraph()
             break
         }else{
+            currents.push({x:voltage/20,y:current})
+            powers.push({x:voltage/20,y:current*(voltage/20)})
             setValuesInProcessedTable(voltage,current)
         }
     }
@@ -79,53 +84,53 @@ $(document).ready(function (){
         }
     }
 
-
-    var ctx = document.getElementById('myChart').getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: 'scatter',
-        data: {
-            datasets: [
-                {
-                    label: 'Putere',
-                    data: [{x: 1, y: 2}, {x: 2, y: 4}, {x: 3, y: 8},{x: 4, y: 16}],
-                    showLine: true,
-                    fill: false,
-                    borderColor: 'rgba(0, 200, 0, 1)'
-                },
-                {
-                    label: 'Curent',
-                    data: [{x: 1, y: 3}, {x: 3, y: 4}, {x: 4, y: 6}, {x: 6, y: 9}],
-                    showLine: true,
-                    fill: false,
-                    borderColor: 'rgba(200, 0, 0, 1)'
-                }
-            ]
-        },
-        options: {
-            maintainAspectRatio: false,
-            tooltips: {
-                mode: 'index',
-                intersect: false,
-            },
-            hover: {
-                mode: 'nearest',
-                intersect: true
-            },
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero:true
-                    }
-                }]
-            },
-        }
-  
-    });
-    function setChartSize() {
+    function setChartSize(myChart) {
         myChart.canvas.parentNode.style.height = document.getElementById("chartContainer").style.height;
-        myChart.canvas.parentNode.style.width = document.getElementById("chartContainer").style.height;
+        myChart.canvas.parentNode.style.width = document.getElementById("chartContainer").style.width;
       }
 
-    setChartSize()
-    window.onresize = setChartSize;
+    function generateGraph(){
+        let ctx = document.getElementById('myChart').getContext('2d');
+        let myChart = new Chart(ctx, {
+            type: 'scatter',
+            data: {
+                datasets: [
+                    {
+                        label: 'Putere',
+                        data: powers,
+                        showLine: true,
+                        fill: false,
+                        borderColor: 'rgba(0, 200, 0, 1)'
+                    },
+                    {
+                        label: 'Curent',
+                        data: currents,
+                        showLine: true,
+                        fill: false,
+                        borderColor: 'rgba(200, 0, 0, 1)'
+                    }
+                ]
+            },
+            options: {
+                maintainAspectRatio: false,
+                tooltips: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                hover: {
+                    mode: 'nearest',
+                    intersect: true
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }]
+                },
+            }
+        });
+        setChartSize(myChart)
+        window.onresize = setChartSize;
+    }
 })
