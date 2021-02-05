@@ -102,6 +102,7 @@ $(document).ready(function (){
             ]
         },
         options: {
+            maintainAspectRatio: false,
             tooltips: {
                 mode: 'index',
                 intersect: false,
@@ -118,5 +119,13 @@ $(document).ready(function (){
                 }]
             },
         }
+  
     });
+    function setChartSize() {
+        myChart.canvas.parentNode.style.height = document.getElementById("chartContainer").style.height;
+        myChart.canvas.parentNode.style.width = document.getElementById("chartContainer").style.height;
+      }
+
+    setChartSize()
+    window.onresize = setChartSize;
 })
