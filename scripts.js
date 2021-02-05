@@ -23,6 +23,10 @@ $(document).ready(function (){
         }
     })
 
+    $("input[type='text']").on('change',function (){
+        setValuesAutomatically()
+    })
+
     $(document).on('click','.form-output-processed .table-body .table-row',function (){
         $('.form-output-functions .table-body').empty()
         $('#voltage-function').text($(this).data('voltage'))
