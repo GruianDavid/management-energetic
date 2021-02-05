@@ -27,92 +27,92 @@
                 <span class="unit">U.M.</span>
             </div>
             <div class="form-group">
-                <label for="isc">isc</label>
-                <input type="text" name="isc" id="isc" placeholder="isc" value="6">
-                <span class="unit">unit</span>
+                <label for="isc">Isc</label>
+                <input type="text" name="isc" id="isc" placeholder="Curent scurt-circuit" value="6" required>
+                <span class="unit">A</span>
             </div>
 
             <div class="form-group">
-                <label for="ki">ki</label>
-                <input type="text" name="ki" id="ki" placeholder="ki" value="0.001">
-                <span class="unit">unit</span>
+                <label for="ki">Ki</label>
+                <input type="text" name="ki" id="ki" placeholder="ki" value="0.001" required>
+                <span class="unit"></span>
             </div>
 
             <div class="form-group">
-                <label for="t">t</label>
-                <input type="text" name="t" id="t" placeholder="t" value="300">
-                <span class="unit">unit</span>
+                <label for="t">T</label>
+                <input type="text" name="t" id="t" placeholder="Temperatura" value="300" required>
+                <span class="unit">K</span>
             </div>
 
             <div class="form-group">
-                <label for="lr">lr</label>
-                <input type="text" name="lr" id="lr" placeholder="lr" value="1000">
-                <span class="unit">unit</span>
+                <label for="Ir">Ir</label>
+                <input type="text" name="Ir" id="Ir" placeholder="Iradiatie" value="1000" required>
+                <span class="unit">W/m2</span>
             </div>
 
             <div class="form-group">
-                <label for="lm">lm</label>
-                <input type="text" name="lm" id="lm" placeholder="lm" value="1000">
-                <span class="unit">unit</span>
+                <label for="Im">Im</label>
+                <input type="text" name="Im" id="Im" placeholder="Im" value="1000" required>
+                <span class="unit"></span>
             </div>
 
             <div class="form-group">
                 <label for="q">q</label>
-                <input type="text" name="q" id="q" placeholder="q" value="1.602E-19">
-                <span class="unit">unit</span>
+                <input type="text" name="q" id="q" placeholder="Sarcina electrica" value="1.602E-19" required>
+                <span class="unit">Coulomb</span>
             </div>
 
             <div class="form-group">
                 <label for="n">n</label>
-                <input type="text" name="n" id="n" placeholder="n" value="1">
-                <span class="unit">unit</span>
+                <input type="text" name="n" id="n" placeholder="n" value="1" required>
+                <span class="unit"></span>
             </div>
 
             <div class="form-group">
                 <label for="k">k</label>
-                <input type="text" name="k" id="k" placeholder="k" value="1.38E-23">
-                <span class="unit">unit</span>
+                <input type="text" name="k" id="k" placeholder="Boltzmann constant" value="1.38E-23" required readonly>
+                <span class="unit">J/K</span>
             </div>
 
             <div class="form-group">
                 <label for="Rs">Rs</label>
-                <input type="text" name="Rs" id="Rs" placeholder="Rs" value="0.5">
-                <span class="unit">unit</span>
+                <input type="text" name="Rs" id="Rs" placeholder="Rs" value="0.5" required>
+                <span class="unit">Ohm</span>
             </div>
 
             <div class="form-group">
                 <label for="Rsh">Rsh</label>
-                <input type="text" name="Rsh" id="Rsh" placeholder="Rsh" value="1000">
-                <span class="unit">unit</span>
+                <input type="text" name="Rsh" id="Rsh" placeholder="Rsh" value="1000" required>
+                <span class="unit">Ohm</span>
             </div>
 
-            <div class="form-group readonly">
-                <label for="l0">l0</label>
-                <input type="text" name="l0" id="l0" placeholder="l0" value="isc/(Math.exp(q*0.6/n/k/t)-1)">
-                <span class="unit">unit</span>
+            <div class="form-group">
+                <label for="I0">I0</label>
+                <input type="text" name="I0" id="I0" placeholder="I0" value="" readonly>
+                <span class="unit">A</span>
             </div>
 
             <div class="user-selected-processing checkbox-switch">
                 <input type="checkbox" name="autoManual" id="autoManual">
-                <label class="automatic">Generare Automata</label>
+                <label class="automatic">Generare Automată</label>
                 <label for="autoManual" class="switch"></label>
-                <label class="manual">Generare Manuala</label>
+                <label class="manual">Generare Manuală</label>
             </div>
 
             <div class="form-group highlight user-selected-value">
                 <label for="valueToBeRead">Tensiune</label>
-                <input type="number" step="0.05" name="valueToBeRead" id="valueToBeRead" placeholder="valueToBeRead" min="0.1" max="0.9" value="0.1">
-                <span class="unit">unit</span>
+                <input type="number" step="0.01" name="valueToBeRead" id="valueToBeRead" placeholder="Tensiune" min="0.1" max="0.9" value="0.1" required>
+                <span class="unit">A</span>
             </div>
 
-            <input type="submit" id="submit" value="Genereaza" >
+            <input type="submit" id="submit" value="Generează" >
  
         </form>
     </div>
     <div class="form-output">
         <div class="form-output-processed card">
             <div class="table">
-                <div class="table-title">Some name here</div>
+                <div class="table-title">Tabel curent-putere</div>
                 <div class="table-head">
                     <ul class="table-row">
                         <li class="cell">Tensiune</li>
@@ -122,18 +122,12 @@
                     </ul>
                 </div>
                 <div class="table-body">
-                    <ul class="table-row">
-                        <li class="cell" contenteditable>0.990941924</li>
-                        <li class="cell" contenteditable>0.990941924</li>
-                        <li class="cell" contenteditable>0.990941924</li>
-                        <li class="cell" contenteditable>0.990941924</li>
-                    </ul>
-                    <ul class="table-row highlight">
-                        <li class="cell" contenteditable>0.990941924</li>
-                        <li class="cell" contenteditable>0.990941924</li>
-                        <li class="cell" contenteditable>0.990941924</li>
-                        <li class="cell" contenteditable>0.990941924</li>
-                    </ul>
+<!--                    <ul class="table-row highlight">-->
+<!--                        <li class="cell" contenteditable>0.990941924</li>-->
+<!--                        <li class="cell" contenteditable>0.990941924</li>-->
+<!--                        <li class="cell" contenteditable>0.990941924</li>-->
+<!--                        <li class="cell" contenteditable>0.990941924</li>-->
+<!--                    </ul>-->
                 </div>
             </div>
         </div>
@@ -150,32 +144,12 @@
                 <div class="table-title">Some name here</div>
                 <div class="table-head">
                     <ul class="table-row" data-crt="x">
-                        <li class="cell">Cell content</li>
-                        <li class="cell">Cell content</li>
-                        <li class="cell">Cell content</li>
+                        <li class="cell">f(x)</li>
+                        <li class="cell">f'(x)</li>
+                        <li class="cell">xn+1</li>
                     </ul>
                 </div>
                 <div class="table-body">
-                    <ul class="table-row">
-                        <li class="cell">Cell content</li>
-                        <li class="cell">Cell content</li>
-                        <li class="cell">Cell content</li>
-                    </ul>
-                    <ul class="table-row">
-                        <li class="cell">Cell content</li>
-                        <li class="cell">Cell content</li>
-                        <li class="cell">Cell content</li>
-                    </ul>
-                    <ul class="table-row">
-                        <li class="cell">Cell content</li>
-                        <li class="cell">Cell content</li>
-                        <li class="cell">Cell content</li>
-                    </ul>
-                    <ul class="table-row">
-                        <li class="cell">Cell content</li>
-                        <li class="cell">Cell content</li>
-                        <li class="cell">Cell content</li>
-                    </ul>
                 </div>
             </div>
         </div>
