@@ -382,6 +382,14 @@ body {
                     font-weight: 700;
                 }
             }
+
+            .table-row.best {
+                background: rgba(255, 215, 0, 0.7);
+
+                .cell {
+                    font-weight: 700;
+                }
+            }
         }
     }
 

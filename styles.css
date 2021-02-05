@@ -311,6 +311,12 @@ body {
 .form-output .table-body .table-row.highlight .cell {
   font-weight: 700;
 }
+.form-output .table-body .table-row.best {
+  background: rgba(255, 215, 0, 0.7);
+}
+.form-output .table-body .table-row.best .cell {
+  font-weight: 700;
+}
 .form-output .table-body::-webkit-scrollbar {
   display: none;
 }

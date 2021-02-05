@@ -23,6 +23,12 @@ $(document).ready(function (){
         }
     })
 
+    $(document).on('click','.form-output-processed .table-body .table-row',function (){
+        $('.form-output-functions .table-body').empty()
+        $('#voltage-function').text($(this).data('voltage'))
+        getWantedValueFor($(this).data('voltage'))
+    })
+
     $('#form-params').on('submit',function (e){
         e.preventDefault()
         let form = $(this).serializeArray()
@@ -92,6 +98,8 @@ $(document).ready(function (){
     function setValuesAutomatically(){
         currents = [];
         powers = [];
+        let lastPower = 0;
+        let wasBest = false;
         $('.highlight').removeClass('highlight')
         resetProcessedTable()
         for (let voltage = 2; voltage<20; voltage++){
@@ -106,6 +114,14 @@ $(document).ready(function (){
             }else{
                 currents.push({x:voltage/20,y:current})
                 powers.push({x:voltage/20,y:current*(voltage/20)})
+                if (current*(voltage/20) > lastPower && !wasBest){
+                    lastPower = current*(voltage/20);
+                }else{
+                    if (!wasBest){
+                        wasBest=true;
+                        $("ul[data-voltage='" + (voltage-1)/20 +"']").addClass('best')
+                    }
+                }
                 setValuesInProcessedTable(voltage,current)
             }
         }
@@ -114,10 +130,10 @@ $(document).ready(function (){
     function setValuesInProcessedTable(voltage,current){
         $('.form-output-processed .table-body').append('' +
             '<ul class="table-row" data-voltage="'+(voltage/20)+'">' +
-            '<li class="cell" contenteditable>'+(voltage/20).toPrecision(2)+'</li>' +
-            '<li class="cell" contenteditable>'+(current).toPrecision(8)+'</li>' +
-            '<li class="cell" contenteditable>'+(current*(voltage/20)).toPrecision(8)+'</li>' +
-            '<li class="cell" contenteditable>'+((voltage/20)/current).toPrecision(8)+'</li>' +
+            '<li class="cell">'+(voltage/20).toPrecision(2)+'</li>' +
+            '<li class="cell">'+(current).toPrecision(8)+'</li>' +
+            '<li class="cell">'+(current*(voltage/20)).toPrecision(8)+'</li>' +
+            '<li class="cell">'+((voltage/20)/current).toPrecision(8)+'</li>' +
             '</ul>')
     }
 
@@ -132,18 +148,18 @@ $(document).ready(function (){
         if (element === '') {
             $('.form-output-processed .table-body').append('' +
                 '<ul class="table-row highlight" data-voltage="' + (voltage) + '">' +
-                '<li class="cell" contenteditable>' + (voltage).toPrecision(2) + '</li>' +
-                '<li class="cell" contenteditable>' + (current).toPrecision(8) + '</li>' +
-                '<li class="cell" contenteditable>' + (current * (voltage)).toPrecision(8) + '</li>' +
-                '<li class="cell" contenteditable>' + ((voltage) / current).toPrecision(8) + '</li>' +
+                '<li class="cell">' + (voltage).toPrecision(2) + '</li>' +
+                '<li class="cell">' + (current).toPrecision(8) + '</li>' +
+                '<li class="cell">' + (current * (voltage)).toPrecision(8) + '</li>' +
+                '<li class="cell">' + ((voltage) / current).toPrecision(8) + '</li>' +
                 '</ul>')
         }else{
             element.after('' +
                 '<ul class="table-row highlight" data-voltage="' + (voltage) + '">' +
-                '<li class="cell" contenteditable>' + (voltage).toPrecision(2) + '</li>' +
-                '<li class="cell" contenteditable>' + (current).toPrecision(8) + '</li>' +
-                '<li class="cell" contenteditable>' + (current * (voltage)).toPrecision(8) + '</li>' +
-                '<li class="cell" contenteditable>' + ((voltage) / current).toPrecision(8) + '</li>' +
+                '<li class="cell">' + (voltage).toPrecision(2) + '</li>' +
+                '<li class="cell">' + (current).toPrecision(8) + '</li>' +
+                '<li class="cell">' + (current * (voltage)).toPrecision(8) + '</li>' +
+                '<li class="cell">' + ((voltage) / current).toPrecision(8) + '</li>' +
                 '</ul>')
         }
     }
