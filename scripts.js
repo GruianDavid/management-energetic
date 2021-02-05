@@ -13,26 +13,19 @@ $(document).ready(function (){
     $('#I0').val(I0.toPrecision(4))
     let inputVoltage = 0.1
 
-    let isManual = false;
-    $("input[type='checkbox']").on('change',function (){
-        if ($(this).is(":checked"))
-        {
-            isManual = true
-        }else{
-            isManual = false
-        }
-    })
-
+    //reset everything on input change
     $("input[type='text']").on('change',function (){
         setValuesAutomatically()
     })
 
+    //for regenerating functions table based on processed table entry
     $(document).on('click','.form-output-processed .table-body .table-row',function (){
         $('.form-output-functions .table-body').empty()
         $('#voltage-function').text($(this).data('voltage'))
         getWantedValueFor($(this).data('voltage'))
     })
 
+    //update local variables based on form values submitted
     $('#form-params').on('submit',function (e){
         e.preventDefault()
         let form = $(this).serializeArray()
@@ -65,13 +58,15 @@ $(document).ready(function (){
             }
         })
         I0 = isc/(Math.exp(q*0.6/n/k/t)-1)
-        if (isManual){
+        //check if is manual and add one single value or regenerate tables
+        if ($("input[type='checkbox']").is(":checked")){
             addNewValue()
         }else{
             setValuesAutomatically()
         }
     })
 
+    //compute functions, add values to graph and processed data table
     function addNewValue(){
         $('.highlight').removeClass('highlight')
         resetFunctionsTable()
@@ -83,11 +78,13 @@ $(document).ready(function (){
         generateGraph()
     }
 
+    //add the new current to graph arrays and rearrange by voltage xAxis
     function addNewCurrent(current){
         currents.push({x:inputVoltage,y:current})
         currents.sort((a, b) => (a.x > b.x) ? 1 : -1)
     }
 
+    //add the new power to graph arrays and rearrange by voltage xAxis
     function addNewPower(current){
         powers.push({x:inputVoltage,y:current*(inputVoltage)})
         powers.sort((a, b) => (a.x > b.x) ? 1 : -1)
@@ -106,11 +103,13 @@ $(document).ready(function (){
         let wasBest = false;
         $('.highlight').removeClass('highlight')
         resetProcessedTable()
+        //for more fine tuning replace 20 with a higher value (will take longer to load and calculate all tables)
+        //used division by 20 because javascript has issues with adding 0.1 on each run ( ex: 0.1000004 instead of 0.1)
         for (let voltage = 2; voltage<20; voltage++){
             resetFunctionsTable()
             let current = getWantedValueFor(voltage/20)
             if (current < 0){
-                //if current is negative load the last functions table
+                //if current is negative load the last functions table stored as backup
                 $('.form-output-functions .table-body').empty().append(backupFunctionsTable)
                 $('#voltage-function').text((voltage-1)/20)
                 generateGraph()
@@ -131,6 +130,7 @@ $(document).ready(function (){
         }
     }
 
+    //add row to the processed table, one after another
     function setValuesInProcessedTable(voltage,current){
         $('.form-output-processed .table-body').append('' +
             '<ul class="table-row" data-voltage="'+(voltage/20)+'">' +
@@ -141,6 +141,7 @@ $(document).ready(function (){
             '</ul>')
     }
 
+    //add the manually added values to the processed table in order of voltage
     function setValueInProcessedTable(voltage,current){
         let element = '';
         $('.form-output-processed .table-body').children('ul').each(function (){
@@ -168,6 +169,7 @@ $(document).ready(function (){
         }
     }
 
+    //add row in functions table
     function setValuesInFunctionsTable(fx,f1x,xn1){
         $('.form-output-functions .table-body').append('' +
             '<ul class="table-row">' +
@@ -177,16 +179,20 @@ $(document).ready(function (){
             '</ul>')
     }
 
+    //empty functions table but keep last value in case the current becomes negative on next iteration.
+    //if that happens, the whole table will be replaced with this one, being the last valid one
     function resetFunctionsTable(){
         let table = $('.form-output-functions .table-body')
         backupFunctionsTable = table.clone()
         table.empty()
     }
 
+    //empty processed table
     function resetProcessedTable(){
         $('.form-output-processed .table-body').empty()
     }
 
+    //calculate each function in functions table and generate rows
     function getWantedValueFor(valueToBeRead){
         let index = 0;
         let lastValue = 0
@@ -214,11 +220,13 @@ $(document).ready(function (){
         }
     }
 
+    //for chart resize/positioning on some device sizes
     function setChartSize(myChart) {
         myChart.canvas.parentNode.style.height = document.getElementById("chartContainer").style.height;
         myChart.canvas.parentNode.style.width = document.getElementById("chartContainer").style.width;
       }
 
+    //generate chart using global variables powers[] and currents[]
     function generateGraph(){
         let ctx = document.getElementById('myChart').getContext('2d');
         let myChart = new Chart(ctx, {
