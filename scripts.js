@@ -101,6 +101,7 @@ $(document).ready(function (){
         powers = [];
         let lastPower = 0;
         let wasBest = false;
+        let bestVoltage = 2;
         $('.highlight').removeClass('highlight')
         resetProcessedTable()
         //for more fine tuning replace 20 with a higher value (will take longer to load and calculate all tables)
@@ -122,12 +123,14 @@ $(document).ready(function (){
                 }else{
                     if (!wasBest){
                         wasBest=true;
+                        bestVoltage = (voltage-1)/20;
                         $("ul[data-voltage='" + (voltage-1)/20 +"']").addClass('best')
                     }
                 }
                 setValuesInProcessedTable(voltage,current)
             }
         }
+        $("ul[data-voltage='" + bestVoltage +"']").trigger('click')
     }
 
     //add row to the processed table, one after another
