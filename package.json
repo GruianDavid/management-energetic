@@ -1,6 +1,19 @@
 {
   "name": "management-energetic",
   "version": "1.0.0",
-  "dependencies": {
-  }
+  "description": "Proiect facultate-> calcul curent celula fotovoltaica",
+  "main": "scripts.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GruianDavid/management-energetic.git"
+  },
+  "author": "Gruian David",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GruianDavid/management-energetic/issues"
+  },
+  "homepage": "https://github.com/GruianDavid/management-energetic#readme"
 }
