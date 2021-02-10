@@ -1,0 +1,14 @@
+{
+  "name": "vendor_name/management-energetic",
+  "description": "Proiect management energetic -> calculul curentului produs de o celula fotovoltaica",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "David Gruian",
+      "email": "david.gruian@gmail.com"
+    }
+  ],
+  "require": {
+  }
+}
